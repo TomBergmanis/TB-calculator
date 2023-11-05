@@ -12,10 +12,18 @@ const currentOperandTextElement = document.querySelector(
   "[data-current-operand]"
 );
 
-// AC function
+// AC function All Clear button
 allClearButton.addEventListener("click", clearDisplay);
 function clearDisplay() {
   calculatorDisplay.textContent = "";
+}
+
+// delete Button
+deleteButton.addEventListener("click", deleteNumber);
+function deleteNumber() {
+  calculatorDisplay.textContent = calculatorDisplay.textContent
+    .toString()
+    .slice(0, -1);
 }
 
 // display numbers in calculator screen
