@@ -3,84 +3,24 @@ let firstNumber = "";
 let currentOperation = null;
 let result = "";
 
-const calculatorDisplay = document.querySelector(".display");
-const numberButtons = document.querySelectorAll("[data-number]");
-const operationButtons = document.querySelectorAll("[data-operation]");
-const equalsbutton = document.getElementById("equalsBtn");
-const deleteButton = document.querySelector("[data-delete]");
-const allClearButton = document.querySelector("[data-all-clear]");
-const previousOperandTextElement = document.querySelector(
-  "[data-previous-operand]"
-);
-const currentOperandTextElement = document.querySelector(
-  "[data-current-operand]"
-);
-currentOperandTextElement.textContent = "";
-
-// display numbers on calculator screen
-numberButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    console.log(button.textContent);
-    //inputs the first number
-    storedNumber += button.value;
-    currentOperandTextElement.textContent = storedNumber;
-  });
-});
-
-// display operations in calculator screen
-operationButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    console.log(button.textContent);
-
-    //stores the first number to the firstNumber variable when the operator is inputted
-    firstNumber = storedNumber;
-
-    //inputs the operation and stores it to currentOperation variable
-    currentOperation = currentOperandTextElement.textContent +=
-      button.textContent;
-
-    // sets the previous display to the stored number and the operation inputted
-    previousOperandTextElement.textcontent = storedNumber + currentOperation;
-
-    // clears teh stored number ready for the second number to be inputted
-    storedNumber = "";
-    console.log(`your current operation is ${currentOperation}`);
-    console.log(`store number = ${storedNumber} first number = ${firstNumber}`);
-  });
-});
-
-equalsbutton.addEventListener("click", () => {
-  console.log("equals button clicked");
-  result = operate(
-    currentOperation,
-    parseFloat(firstNumber),
-    parseFloat(storedNumber)
-  );
-  currentOperandTextElement.textcontent = result;
-  previousOperandTextElement.textcontent =
-    firstNumber + " " + currentOperation + " " + storedNumber;
-  storedNumber = result;
-  console.log(result);
-});
-
-function operate(operator, a, b) {
-  a = Number(a);
-  b = Number(b);
+function operate(num1, num2, operator) {
   switch (operator) {
     case "+":
-      return add(a, b);
+      return add(num1, num2);
     case "-":
-      return substract(a, b);
+      return subtract(num1, num2);
     case "*":
-      return multiply(a, b);
+      return multiply(num1, num2);
     case "/":
-      return divide(a, b);
-    //   if (b === 0) return null;
-    //   else return divide(a, b);
-    // default:
-    //   return null;
+      return divide(num1, num2);
   }
 }
+//   if (b === 0) return null;
+//   else return divide(a, b);
+// default:
+//   return null;
+//   }
+// }
 
 // console.log(operate(currentOperator, firstNumber, storedNumber));
 
@@ -108,20 +48,76 @@ function divide(x, y) {
 }
 // console.log(divide(0, 0));
 
-// AC function All Clear button
-allClearButton.addEventListener("click", clearDisplay);
-function clearDisplay() {
-  currentOperandTextElement.textContent = "";
-  previousOperandTextElement.textContent = "";
-  firstNumber = "";
-  storedNumber = "";
-  currentOperation = null;
-}
+const calculatorDisplay = document.querySelector(".display");
+const numberButtons = document.querySelectorAll("[data-number]");
+const operationButtons = document.querySelectorAll(".operation");
+const equalsbutton = document.getElementById("equalsBtn");
+const deleteButton = document.querySelector("[data-delete]");
+const allClearButton = document.querySelector("[data-all-clear]");
+const previousOperandTextElement = document.querySelector(
+  "[data-previous-operand]"
+);
+const currentOperandTextElement = document.querySelector(
+  "[data-current-operand]"
+);
+currentOperandTextElement.textContent = "";
 
-// delete Button
-deleteButton.addEventListener("click", deleteNumber);
-function deleteNumber() {
-  currentOperandTextElement.textContent = currentOperandTextElement.textContent
-    .toString()
-    .slice(0, -1);
-}
+// display numbers on calculator screen
+numberButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    console.log(button.textContent);
+    //inputs the first number
+    storedNumber += button.value;
+    currentOperandTextElement.textContent = storedNumber;
+  });
+});
+
+// display operations in calculator screen
+operationButtons.forEach((operation) => {
+  operation.addEventListener("click", function () {
+    console.log(operation.textContent);
+
+    //stores the first number to the firstNumber variable when the operator is inputted
+    firstNumber = storedNumber;
+
+    //inputs the operation and stores it to currentOperation variable
+    currentOperation = operation.textContent;
+
+    // sets the previous display to the stored number and the operation inputted
+    previousOperandTextElement.textcontent = storedNumber + currentOperation;
+
+    // clears teh stored number ready for the second number to be inputted
+    storedNumber = "";
+    console.log(`your current operation is ${currentOperation}`);
+    console.log(`store number = ${storedNumber} first number = ${firstNumber}`);
+  });
+});
+
+equalsbutton.addEventListener("click", function () {
+  // when equals key is clicked call operate() function
+  result = operate(
+    parseFloat(firstNumber),
+    parseFloat(storedNumber),
+    currentOperation
+  );
+  calculatorDisplay.textContent = result;
+  console.log(result);
+});
+
+// // AC function All Clear button
+// allClearButton.addEventListener("click", clearDisplay);
+// function clearDisplay() {
+//   currentOperandTextElement.textContent = "";
+//   previousOperandTextElement.textContent = "";
+//   firstNumber = "";
+//   storedNumber = "";
+//   currentOperation = null;
+// }
+
+// // delete Button
+// deleteButton.addEventListener("click", deleteNumber);
+// function deleteNumber() {
+//   currentOperandTextElement.textContent = currentOperandTextElement.textContent
+//     .toString()
+//     .slice(0, -1);
+// }
