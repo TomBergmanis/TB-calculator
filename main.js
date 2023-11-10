@@ -1,3 +1,6 @@
+// cannot do multiple operations in a single calculations
+// does not recognise multiple decimal points
+
 let storedNumber = "";
 let firstNumber = "";
 let currentOperation = null;
