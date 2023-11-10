@@ -1,8 +1,12 @@
-// create a function that populate the display when you click the number buttons
+let storedNumber = "";
+let firstNumber = "";
+let currentOperation = null;
+let result = "";
+
 const calculatorDisplay = document.querySelector(".display");
 const numberButtons = document.querySelectorAll("[data-number]");
 const operationButtons = document.querySelectorAll("[data-operation]");
-const equalsbutton = document.getElementById("#equalsBtn");
+const equalsbutton = document.getElementById("equalsBtn");
 const deleteButton = document.querySelector("[data-delete]");
 const allClearButton = document.querySelector("[data-all-clear]");
 const previousOperandTextElement = document.querySelector(
@@ -11,26 +15,15 @@ const previousOperandTextElement = document.querySelector(
 const currentOperandTextElement = document.querySelector(
   "[data-current-operand]"
 );
+currentOperandTextElement.textContent = "";
 
-// AC function All Clear button
-allClearButton.addEventListener("click", clearDisplay);
-function clearDisplay() {
-  calculatorDisplay.textContent = "";
-}
-
-// delete Button
-deleteButton.addEventListener("click", deleteNumber);
-function deleteNumber() {
-  calculatorDisplay.textContent = calculatorDisplay.textContent
-    .toString()
-    .slice(0, -1);
-}
-
-// display numbers in calculator screen
+// display numbers on calculator screen
 numberButtons.forEach((button) => {
   button.addEventListener("click", () => {
     console.log(button.textContent);
-    calculatorDisplay.textContent += button.textContent;
+    //inputs the first number
+    storedNumber += button.value;
+    currentOperandTextElement.textContent = storedNumber;
   });
 });
 
@@ -38,9 +31,58 @@ numberButtons.forEach((button) => {
 operationButtons.forEach((button) => {
   button.addEventListener("click", () => {
     console.log(button.textContent);
-    calculatorDisplay.textContent += button.textContent;
+
+    //stores the first number to the firstNumber variable when the operator is inputted
+    firstNumber = storedNumber;
+
+    //inputs the operation and stores it to currentOperation variable
+    currentOperation = currentOperandTextElement.textContent +=
+      button.textContent;
+
+    // sets the previous display to the stored number and the operation inputted
+    previousOperandTextElement.textcontent = storedNumber + currentOperation;
+
+    // clears teh stored number ready for the second number to be inputted
+    storedNumber = "";
+    console.log(`your current operation is ${currentOperation}`);
+    console.log(`store number = ${storedNumber} first number = ${firstNumber}`);
   });
 });
+
+equalsbutton.addEventListener("click", () => {
+  console.log("equals button clicked");
+  result = operate(
+    currentOperation,
+    parseFloat(firstNumber),
+    parseFloat(storedNumber)
+  );
+  currentOperandTextElement.textcontent = result;
+  previousOperandTextElement.textcontent =
+    firstNumber + " " + currentOperation + " " + storedNumber;
+  storedNumber = result;
+  console.log(result);
+});
+
+function operate(operator, a, b) {
+  a = Number(a);
+  b = Number(b);
+  switch (operator) {
+    case "+":
+      return add(a, b);
+    case "-":
+      return substract(a, b);
+    case "*":
+      return multiply(a, b);
+    case "/":
+      return divide(a, b);
+    //   if (b === 0) return null;
+    //   else return divide(a, b);
+    // default:
+    //   return null;
+  }
+}
+
+// console.log(operate(currentOperator, firstNumber, storedNumber));
 
 // add basic
 function add(x, y) {
@@ -66,30 +108,20 @@ function divide(x, y) {
 }
 // console.log(divide(0, 0));
 
-// operator buttons]
-
-let x = "";
-let y = "";
-const addOperator = "+";
-const subtractOperator = "-";
-const multiplyOperator = "*";
-const divideOperator = "/";
-
-function operate(operator, x, y) {
-  x = Number(x);
-  y = Number(y);
-  switch (operator) {
-    case "+":
-      return add(x, y);
-    case "-":
-      return subtract(x, y);
-    case "*":
-      return multiply(x, y);
-    case "/":
-      if (y === 0) return null;
-      else return divide(x, y);
-    default:
-      return null;
-  }
+// AC function All Clear button
+allClearButton.addEventListener("click", clearDisplay);
+function clearDisplay() {
+  currentOperandTextElement.textContent = "";
+  previousOperandTextElement.textContent = "";
+  firstNumber = "";
+  storedNumber = "";
+  currentOperation = null;
 }
-// console.log(operate(1, 5));
+
+// delete Button
+deleteButton.addEventListener("click", deleteNumber);
+function deleteNumber() {
+  currentOperandTextElement.textContent = currentOperandTextElement.textContent
+    .toString()
+    .slice(0, -1);
+}
