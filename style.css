@@ -45,6 +45,14 @@ body {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
 }
+.operation {
+  background-color: #cdb632;
+  padding: 20px;
+  border: 2px solid;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
 
 .controlBtn {
   padding: 20px;
@@ -55,7 +63,17 @@ body {
 }
 
 .controlBtn:hover {
-  background-color: lightcoral;
+  background-color: rgb(91, 184, 91);
+}
+.deleteBtn {
+  padding: 20px;
+  border: 2px solid;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.deleteBtn:hover {
+  background-color: rgb(215, 54, 54);
 }
 
 .btn {
@@ -66,6 +84,15 @@ body {
   font-weight: bold;
 }
 
-.btn:hover {
+.btn:hover,
+.operation:hover {
   background-color: grey;
+}
+
+#equalsBtn {
+  background-color: rgb(53, 168, 53);
+}
+
+#equalsBtn:hover {
+  background-color: rgb(11, 218, 11);
 }

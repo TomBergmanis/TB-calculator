@@ -12,7 +12,10 @@ function operate(num1, num2, operator) {
     case "*":
       return multiply(num1, num2);
     case "/":
-      return divide(num1, num2);
+      if (num2 === 0) return null;
+      else return divide(num1, num2);
+    default:
+      return null;
   }
 }
 //   if (b === 0) return null;
@@ -48,7 +51,6 @@ function divide(x, y) {
 }
 // console.log(divide(0, 0));
 
-const calculatorDisplay = document.querySelector(".display");
 const numberButtons = document.querySelectorAll("[data-number]");
 const operationButtons = document.querySelectorAll(".operation");
 const equalsbutton = document.getElementById("equalsBtn");
@@ -60,7 +62,24 @@ const previousOperandTextElement = document.querySelector(
 const currentOperandTextElement = document.querySelector(
   "[data-current-operand]"
 );
-currentOperandTextElement.textContent = "";
+
+// AC function All Clear button
+allClearButton.addEventListener("click", clearDisplay);
+function clearDisplay() {
+  currentOperandTextElement.textContent = "";
+  previousOperandTextElement.textContent = "";
+  firstNumber = "";
+  storedNumber = "";
+  currentOperation = null;
+}
+
+// delete Button
+deleteButton.addEventListener("click", deleteNumber);
+function deleteNumber() {
+  currentOperandTextElement.textContent = currentOperandTextElement.textContent
+    .toString()
+    .slice(0, -1);
+}
 
 // display numbers on calculator screen
 numberButtons.forEach((button) => {
@@ -100,24 +119,6 @@ equalsbutton.addEventListener("click", function () {
     parseFloat(storedNumber),
     currentOperation
   );
-  calculatorDisplay.textContent = result;
+  currentOperandTextElement.textContent = result;
   console.log(result);
 });
-
-// // AC function All Clear button
-// allClearButton.addEventListener("click", clearDisplay);
-// function clearDisplay() {
-//   currentOperandTextElement.textContent = "";
-//   previousOperandTextElement.textContent = "";
-//   firstNumber = "";
-//   storedNumber = "";
-//   currentOperation = null;
-// }
-
-// // delete Button
-// deleteButton.addEventListener("click", deleteNumber);
-// function deleteNumber() {
-//   currentOperandTextElement.textContent = currentOperandTextElement.textContent
-//     .toString()
-//     .slice(0, -1);
-// }
