@@ -18,14 +18,6 @@ function operate(num1, num2, operator) {
       return null;
   }
 }
-//   if (b === 0) return null;
-//   else return divide(a, b);
-// default:
-//   return null;
-//   }
-// }
-
-// console.log(operate(currentOperator, firstNumber, storedNumber));
 
 // add basic
 function add(x, y) {
@@ -119,6 +111,6 @@ equalsbutton.addEventListener("click", function () {
     parseFloat(storedNumber),
     currentOperation
   );
-  currentOperandTextElement.textContent = result;
+  currentOperandTextElement.textContent = Math.round(result * 1000) / 1000;
   console.log(result);
 });
