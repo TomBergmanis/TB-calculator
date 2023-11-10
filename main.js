@@ -65,7 +65,7 @@ function clearDisplay() {
   currentOperation = null;
 }
 
-// delete Button
+// delete Button doesnt currently work!
 deleteButton.addEventListener("click", deleteNumber);
 function deleteNumber() {
   currentOperandTextElement.textContent = currentOperandTextElement.textContent
@@ -79,6 +79,7 @@ numberButtons.forEach((button) => {
     console.log(button.textContent);
     //inputs the first number
     storedNumber += button.value;
+
     currentOperandTextElement.textContent = storedNumber;
   });
 });
@@ -87,6 +88,7 @@ numberButtons.forEach((button) => {
 operationButtons.forEach((operation) => {
   operation.addEventListener("click", function () {
     console.log(operation.textContent);
+    if (currentOperation !== null) evaluate();
 
     //stores the first number to the firstNumber variable when the operator is inputted
     firstNumber = storedNumber;
@@ -104,7 +106,9 @@ operationButtons.forEach((operation) => {
   });
 });
 
-equalsbutton.addEventListener("click", function () {
+equalsbutton.addEventListener("click", evaluate);
+
+function evaluate() {
   // when equals key is clicked call operate() function
   result = operate(
     parseFloat(firstNumber),
@@ -113,4 +117,4 @@ equalsbutton.addEventListener("click", function () {
   );
   currentOperandTextElement.textContent = Math.round(result * 1000) / 1000;
   console.log(result);
-});
+}
